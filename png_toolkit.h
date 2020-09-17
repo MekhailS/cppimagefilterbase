@@ -6,11 +6,19 @@
 //#include <memory>
 #include "stb_image.h"
 
+#include "definitions.h"
+
 struct image_data
 {
     stbi_uc *pixels;
     int w, h;
     int compPerPixel;
+
+    bool setPixel(int x, int y, rgb& clrSet);
+    rgb getPixel(int x, int y);
+
+private:
+    int indexByXY(int x, int y);
 };
 
 class png_toolkit
