@@ -26,3 +26,26 @@ void FilterBlackWhite::apply(image_data &img, AreaRect &area)
 
     area.forEachImagePixel(img, setBW_lambda);
 }
+
+
+void FilterThreshold::apply(image_data &img, AreaRect &area)
+{
+    FilterBlackWhite filterBW;
+    filterBW.apply(img, area);
+
+    image_data imgCopy = img.deepcopy();
+
+    auto setThreshold_lambda = [&imgCopy](image_data& img, const point& p){
+        AreaRect square(p, 3);
+
+        // since BlackWhite filter was applied, there is no difference in channels
+        stbi_uc medianVal = square.getMedianChannelVal(imgCopy, 'R');
+
+        rgb_errorFlag pixel_error = img.getPixel(p);
+        if ((!pixel_error.second) && (pixel_error.first[0] < medianVal))
+            img.setPixel(p, {0, 0, 0});
+
+    };
+
+    area.forEachImagePixel(img, setThreshold_lambda);
+}

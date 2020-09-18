@@ -6,7 +6,10 @@
 #ifndef FILTERS_DEFINITIONS_H
 #define FILTERS_DEFINITIONS_H
 
+#include <iostream>
 #include <array>
+#include <vector>
+#include <algorithm>
 #include "stb_image.h"
 
 

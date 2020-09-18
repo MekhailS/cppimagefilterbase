@@ -18,12 +18,21 @@ public:
 
 class FilterRed: public FilterAbstract
 {
+public:
     virtual void apply(image_data& img, AreaRect& area) override;
 };
 
 
 class FilterBlackWhite: public FilterAbstract
 {
+public:
+    virtual void apply(image_data& img, AreaRect& area) override;
+};
+
+
+class FilterThreshold: public FilterAbstract
+{
+public:
     virtual void apply(image_data& img, AreaRect& area) override;
 };
 

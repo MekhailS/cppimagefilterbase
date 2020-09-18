@@ -19,6 +19,8 @@ struct image_data
     bool setPixel(const point& p, const rgb& clrSet);
     rgb_errorFlag getPixel(const point& p);
 
+    ~image_data();
+
 private:
     int indexByPoint(const point& p);
 };

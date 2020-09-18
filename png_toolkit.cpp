@@ -56,8 +56,15 @@ rgb_errorFlag image_data::getPixel(const point& p)
 
 int image_data::indexByPoint(const point& p)
 {
-    int i = compPerPixel * (p.x + p.y * w);
-    return (i <= h * w - compPerPixel) ? i : -1;
+    if ((0 <= p.x < w) && (0 <= p.y < h))
+        return compPerPixel * (p.x + p.y * w);
+
+    return -1;
+}
+
+image_data::~image_data()
+{
+    stbi_image_free(pixels);
 }
 
 
