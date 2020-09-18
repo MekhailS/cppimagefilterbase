@@ -5,46 +5,59 @@
 #include "stb_image_write.h"
 #include "png_toolkit.h"
 
-int image_data::indexByXY(int x, int y)
+#include "area_rect.h"
+#include "filters.h"
+
+image_data image_data::deepcopy()
 {
-    int i = compPerPixel * (x + y * w);
-    return (i <= h * w - compPerPixel) ? i : -1;
+    image_data imgNew;
+    imgNew.h = h;
+    imgNew.w = w;
+    imgNew.compPerPixel = compPerPixel;
+
+    int imgSize = h*w*compPerPixel;
+    imgNew.pixels = new stbi_uc[imgSize];
+    memcpy(imgNew.pixels, pixels, imgSize);
+
+    return imgNew;
 }
 
-bool image_data::setPixel(int x, int y, rgb &clrSet)
+bool image_data::setPixel(const point& p, const rgb &clrSet)
 {
     try
     {
-        int i = indexByXY(x, y);
+        int i = indexByPoint(p);
 
         if (i < 0)
-            throw "Point (x,y) is outside of image area";
+            throw "Set point (x,y) is outside of image area";
 
         pixels[i] = clrSet[0];
         pixels[i+1] = clrSet[1];
         pixels[i+2] = clrSet[2];
+
+        return 1;
     }
     catch (const char *str)
     {
         std::cout << "Error: " << str << std::endl;
     }
+    return 0;
 }
 
-rgb image_data::getPixel(int x, int y)
+rgb_errorFlag image_data::getPixel(const point& p)
 {
-    try
-    {
-        int i = indexByXY(x, y);
+    int i = indexByPoint(p);
 
-        if (i < 0)
-            throw "Point (x,y) is outside of image area";
+    if (i < 0)
+        return rgb_errorFlag (rgb{0, 0, 0}, 1);
 
-        return {pixels[i], pixels[i+1], pixels[i+2]};
-    }
-    catch (const char *str)
-    {
-        std::cout << "Error: " << str << std::endl;
-    }
+    return rgb_errorFlag (rgb{pixels[i], pixels[i+1], pixels[i+2]}, 1);
+}
+
+int image_data::indexByPoint(const point& p)
+{
+    int i = compPerPixel * (p.x + p.y * w);
+    return (i <= h * w - compPerPixel) ? i : -1;
 }
 
 
@@ -71,8 +84,12 @@ bool png_toolkit::save( const std::string &pictureName )
                           imgData.pixels, 0) != 0;
 }
 
-
 image_data png_toolkit::getPixelData( void ) const
 {
     return imgData;
+}
+
+void png_toolkit::applyFilter(FilterAbstract *filter, AreaRect &area)
+{
+    filter->apply(imgData, area);
 }
