@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Manager.h"
 #include "png_toolkit.h"
 
 int main( int argc, char *argv[] )
@@ -7,12 +8,15 @@ int main( int argc, char *argv[] )
     // toolkit near test images!
     try
     {
-        if (argc != 3)
+        if (argc != 4)
             throw "Not enough arguments";
 
-        png_toolkit studTool;
-        studTool.load(argv[1]);
-        studTool.save(argv[2]);
+        char* fileConfig = argv[1];
+        char* fileIn = argv[2];
+        char* fileOut = argv[3];
+
+        Manager manager;
+        manager.launch(fileConfig, fileIn, fileOut);
 
     }
     catch (const char *str)

@@ -51,18 +51,19 @@ rgb_errorFlag image_data::getPixel(const point& p)
     if (i < 0)
         return rgb_errorFlag (rgb{0, 0, 0}, 1);
 
-    return rgb_errorFlag (rgb{pixels[i], pixels[i+1], pixels[i+2]}, 1);
+    return rgb_errorFlag (rgb{pixels[i], pixels[i+1], pixels[i+2]}, 0);
 }
 
 int image_data::indexByPoint(const point& p)
 {
-    if ((0 <= p.x < w) && (0 <= p.y < h))
+
+    if (( (0 <= p.x) && (p.x < w)) && ((0 <= p.y) && (p.y < h)))
         return compPerPixel * (p.x + p.y * w);
 
     return -1;
 }
 
-image_data::~image_data()
+void image_data::freePixels()
 {
     stbi_image_free(pixels);
 }
@@ -96,7 +97,3 @@ image_data png_toolkit::getPixelData( void ) const
     return imgData;
 }
 
-void png_toolkit::applyFilter(FilterAbstract *filter, AreaRect &area)
-{
-    filter->apply(imgData, area);
-}

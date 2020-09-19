@@ -16,10 +16,9 @@ struct image_data
     int compPerPixel;
 
     image_data deepcopy();
+    void freePixels();
     bool setPixel(const point& p, const rgb& clrSet);
     rgb_errorFlag getPixel(const point& p);
-
-    ~image_data();
 
 private:
     int indexByPoint(const point& p);
@@ -39,8 +38,6 @@ public:
     bool load( std::string const &pictureName );
     bool save( std::string const &pictureName );
     image_data getPixelData( void ) const;
-
-    void applyFilter(FilterAbstract* filter, AreaRect& area);
 
 private:
     image_data imgData;

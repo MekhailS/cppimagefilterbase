@@ -1,12 +1,11 @@
 //
-// Created by Mikhail on 18.09.2020.
-//
+// Created by Mikhail on 18.09.2020.//
 
 #include "area_rect.h"
 
 void AreaRect::fitToImageByFraction(image_data &img, const point &frUpLeft, const point &frDownRight) {
-    upLeft.x = (frUpLeft.x != 0) ? (img.w-1) / frUpLeft.x : 0;
-    upLeft.y = (frUpLeft.y != 0) ? (img.h-1) / frUpLeft.y : 0;
+    upLeft.x = (frUpLeft.x != 0) ? (img.w) / frUpLeft.x - 1: 0;
+    upLeft.y = (frUpLeft.y != 0) ? (img.h) / frUpLeft.y - 1 : 0;
 
     downRight.x = (frDownRight.x != 0) ? (img.w-1) / frDownRight.x : 0;
     downRight.y = (frDownRight.y != 0) ? (img.h-1) / frDownRight.y : 0;
@@ -20,6 +19,12 @@ AreaRect::AreaRect(const point &p, int radius)
     radius -= 1;
     upLeft = {p.x - radius, p.y - radius};
     downRight = {p.x + radius, p.y + radius};
+}
+
+AreaRect::AreaRect()
+{
+    upLeft = {0, 0};
+    downRight = {0, 0};
 }
 
 void AreaRect::forEachImagePixel(image_data& img, const std::function<void(image_data&, const point&)> func)
