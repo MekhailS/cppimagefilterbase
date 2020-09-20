@@ -29,8 +29,8 @@ AreaRect::AreaRect()
 
 void AreaRect::forEachImagePixel(image_data& img, const std::function<void(image_data&, const point&)> func)
 {
-    for (int x = upLeft.x; x<downRight.x; x++){
-        for (int y = upLeft.y; y<downRight.y; y++){
+    for (int x = upLeft.x; x < downRight.x; x++){
+        for (int y = upLeft.y; y < downRight.y; y++){
              func(img, {x, y});
         }
     }
