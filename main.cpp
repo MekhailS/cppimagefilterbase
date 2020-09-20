@@ -15,11 +15,8 @@ int main( int argc, char *argv[] )
         char* fileIn = argv[2];
         char* fileOut = argv[3];
 
-        /*Manager manager;
-        manager.launch(fileConfig, fileIn, fileOut);*/
-        png_toolkit stoodTool;
-        stoodTool.load(fileIn);
-        stoodTool.save(fileOut);
+        Manager manager;
+        manager.launch(fileConfig, fileIn, fileOut);
 
     }
     catch (const char *str)
