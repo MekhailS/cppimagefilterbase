@@ -8,7 +8,7 @@
 void FilterRed::apply(image_data &img, AreaRect &area)
 {
     auto setRed_lambda = [](image_data& img, const point& p){
-        //img.setPixel(p, {255, 0, 0});
+        img.setPixel(p, {255, 0, 0});
     };
 
     area.forEachImagePixel(img, setRed_lambda);

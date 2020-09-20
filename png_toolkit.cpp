@@ -24,24 +24,17 @@ image_data image_data::deepcopy()
 
 bool image_data::setPixel(const point& p, const rgb &clrSet)
 {
-    try
-    {
-        int i = indexByPoint(p);
+    int i = indexByPoint(p);
 
-        if (i < 0)
-            throw "Set point (x,y) is outside of image area";
+    if (i < 0)
+        return 0;
 
-        pixels[i] = clrSet[0];
-        pixels[i+1] = clrSet[1];
-        pixels[i+2] = clrSet[2];
+    pixels[i] = clrSet[0];
+    //pixels[i+1] = clrSet[1];
+    //pixels[i+2] = clrSet[2];
 
-        return 1;
-    }
-    catch (const char *str)
-    {
-        std::cout << "Error: " << str << std::endl;
-    }
-    return 0;
+    return 1;
+
 }
 
 rgb_errorFlag image_data::getPixel(const point& p)
