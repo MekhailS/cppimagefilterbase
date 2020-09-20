@@ -33,21 +33,21 @@ void Manager::launch(char *fileConfigName, char *fileInputName, char *fileOutput
 
     if (!cfgFile.is_open()) {
 
-        /*std::string line;
+        std::string line;
         while (std::getline(cfgFile, line)) {
             filterName_AreaAsArr filterName_boundaries = parseLine(line);
 
             auto filterName = filterName_boundaries.first;
             auto boundaries = filterName_boundaries.second;
 
-            FilterAbstract *filter = filters.getFilter(filterName);
+            /*FilterAbstract *filter = filters.getFilter(filterName);
             if (filter != nullptr) {
                 AreaRect area;
                 area.fitToImageByFraction(img, {boundaries[1], boundaries[0]},
                                           {boundaries[3], boundaries[2]});
                 filter->apply(img, area);
-            }
-        }*/
+            }*/
+        }
         cfgFile.close();
     }
 

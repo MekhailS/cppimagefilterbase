@@ -16,8 +16,6 @@ FilterAbstract* FiltersCollection::getFilter(std::string filterName)
 {
     if (filtersMap.find(filterName) != filtersMap.end()) {
         return filtersMap.find(filterName)->second;
-    } else {
-        throw "There are no filter with such name in filter collection";
     }
     return nullptr;
 }
