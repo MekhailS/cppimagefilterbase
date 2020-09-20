@@ -18,7 +18,7 @@ AreaRect::AreaRect(const point &p, int radius)
 
     radius -= 1;
     upLeft = {p.x - radius, p.y - radius};
-    downRight = {p.x + radius, p.y + radius};
+    downRight = {p.x + radius + 1, p.y + radius + 1};
 }
 
 AreaRect::AreaRect()
