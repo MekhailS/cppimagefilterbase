@@ -30,8 +30,8 @@ bool image_data::setPixel(const point& p, const rgb &clrSet)
         return 0;
 
     pixels[i] = clrSet[0];
-    //pixels[i+1] = clrSet[1];
-    //pixels[i+2] = clrSet[2];
+    pixels[i+1] = clrSet[1];
+    pixels[i+2] = clrSet[2];
 
     return 1;
 
