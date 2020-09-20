@@ -45,7 +45,7 @@ void Manager::launch(char *fileConfigName, char *fileInputName, char *fileOutput
                 AreaRect area;
                 area.fitToImageByFraction(img, {boundaries[1], boundaries[0]},
                                           {boundaries[3], boundaries[2]});
-                //filter->apply(img, area);
+                filter->apply(img, area);
             }
         }
         cfgFile.close();
