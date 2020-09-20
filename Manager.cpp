@@ -41,12 +41,14 @@ void Manager::launch(char *fileConfigName, char *fileInputName, char *fileOutput
         FilterAbstract *filter = filters.getFilter(filterName);
         if (filter != nullptr){
             AreaRect area;
-            area.fitToImageByFraction(img, {boundaries[0], boundaries[1]},
-                                      {boundaries[2], boundaries[3]});
+            area.fitToImageByFraction(img, {boundaries[1], boundaries[0]},
+                                      {boundaries[3], boundaries[2]});
             filter->apply(img, area);
         }
     }
 
     pic.save(fileOutputName);
+
+    cfgFile.close();
     return;
 }
