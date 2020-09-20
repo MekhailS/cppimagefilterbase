@@ -15,6 +15,8 @@ struct AreaRect {
     AreaRect();
     AreaRect(const point &p, int radius);
 
+    AreaRect partInsideOf(const AreaRect& B);
+
     void fitToImageByFraction(image_data& img,
                               const point& frUpLeft={0,0},
                               const point& frDownRight={1,1});

@@ -3,6 +3,19 @@
 
 #include "area_rect.h"
 
+
+AreaRect AreaRect::partInsideOf(const AreaRect& B)
+{
+    AreaRect partInside;
+    partInside.upLeft.x = std::max(upLeft.x, B.upLeft.x);
+    partInside.upLeft.y = std::max(upLeft.y, B.upLeft.y);
+
+    partInside.downRight.x = std::min(downRight.x, B.downRight.x);
+    partInside.downRight.y = std::min(downRight.y, B.downRight.y);
+
+    return partInside;
+}
+
 void AreaRect::fitToImageByFraction(image_data &img, const point &frUpLeft, const point &frDownRight) {
     upLeft.x = (frUpLeft.x != 0) ? (img.w) / frUpLeft.x: 0;
     upLeft.y = (frUpLeft.y != 0) ? (img.h) / frUpLeft.y: 0;

@@ -35,15 +35,17 @@ void FilterThreshold::apply(image_data &img, AreaRect &area)
 
     image_data imgCopy = img.deepcopy();
 
-    auto setThreshold_lambda = [&imgCopy](image_data& img, const point& p) mutable {
+    auto setThreshold_lambda = [&area, &imgCopy](image_data& img, const point& p) mutable {
         AreaRect square(p, 3);
+        AreaRect areaForMedian = square.partInsideOf(area);
 
         // since BlackWhite filter was applied, there is no difference in channels,
         // so, we may pick any of R,G,B ('R' has been chosen below)
-        stbi_uc medianVal = square.getMedianChannelVal(imgCopy, 'R');
+        stbi_uc medianValR = areaForMedian.getMedianChannelVal(imgCopy, 'R');
 
         rgb_errorFlag pixel_error = img.getPixel(p);
-        if ((!pixel_error.second) && (pixel_error.first[0] < medianVal))
+
+        if ((!pixel_error.second) && (pixel_error.first[0] < medianValR))
             img.setPixel(p, {0, 0, 0});
 
     };
