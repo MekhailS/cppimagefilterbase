@@ -4,6 +4,12 @@
 #include "area_rect.h"
 
 
+bool AreaRect::containsPoint(const point& p)
+{
+    return (((upLeft.x >= p.x) && (p.x < downRight.x)) &&
+            ((upLeft.y >= p.y) && (downRight.y < p.y)))
+}
+
 AreaRect AreaRect::partInsideOf(const AreaRect& B)
 {
     AreaRect partInside;
