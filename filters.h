@@ -46,7 +46,7 @@ protected:
 public:
     FilterConvolution(std::vector<std::vector<double>> W): kernel(W) {};
 
-    virtual void apply(image_data& img, AreaRect& area) override;
+    virtual void apply(image_data& img, AreaRect& area) = 0;
 };
 
 
@@ -57,6 +57,8 @@ public:
         FilterConvolution({{-1, -1, -1},
                            {-1,  9, -1},
                            {-1, -1, -1}}) {};
+
+    virtual void apply(image_data& img, AreaRect& area) override;
 };
 
 
@@ -67,6 +69,8 @@ public:
             FilterConvolution({{1, 1, 1},
                                {1, 1, 1},
                                {1, 1, 1}}) {};
+
+    virtual void apply(image_data& img, AreaRect& area) override;
 };
 
 #endif //FILTERS_FILTERS_H
