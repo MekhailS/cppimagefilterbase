@@ -12,14 +12,17 @@ class FiltersCollection {
 
     std::unordered_map<std::string, FilterAbstract*> filtersMap =
             {
-            { "Red" , new FilterRed()},
+            {"Red" , new FilterRed()},
             {"BlackWhite", new FilterBlackWhite()},
-            {"Threshold", new FilterThreshold()}
+            {"Threshold", new FilterThreshold()},
+            {"Edge", new FilterEdge()},
+            {"Blur", new FilterBlur()}
                                                         };
 
 public:
     //FiltersCollection();
     FilterAbstract* getFilter(std::string);
+
     ~FiltersCollection();
 };
 

@@ -6,8 +6,8 @@
 
 bool AreaRect::containsPoint(const point& p) const
 {
-    return (((upLeft.x >= p.x) && (p.x < downRight.x)) &&
-            ((upLeft.y >= p.y) && (downRight.y < p.y)));
+    return (((upLeft.x <= p.x) && (p.x < downRight.x)) &&
+            ((upLeft.y <= p.y) && (p.y < downRight.y)));
 }
 
 AreaRect AreaRect::partInsideOf(const AreaRect& B)

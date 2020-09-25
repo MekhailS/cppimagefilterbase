@@ -54,3 +54,26 @@ void FilterThreshold::apply(image_data &img, AreaRect &area)
 
     imgCopy.freePixels();
 }
+
+
+void FilterConvolution::apply(image_data &img, AreaRect &area)
+{
+    FilterBlackWhite filterBW;
+    filterBW.apply(img, area);
+
+    image_data imgCopy = img.deepcopy();
+
+    auto applyKernel_lambda = [this, &area, &imgCopy](image_data& img, const point& p) mutable {
+        stbi_uc resKernel = this->kernel.applyOnPixel(imgCopy, p, area, 0);
+
+        rgb_errorFlag pixel_error = img.getPixel(p);
+
+        if (!pixel_error.second)
+            img.setPixel(p, {resKernel, resKernel, resKernel});
+
+    };
+
+    area.forEachImagePixel(img, applyKernel_lambda);
+
+    imgCopy.freePixels();
+}
