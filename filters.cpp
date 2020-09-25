@@ -41,7 +41,7 @@ void FilterThreshold::apply(image_data &img, AreaRect &area)
 
         // since BlackWhite filter was applied, there is no difference in channels,
         // so, we may pick any of R,G,B ('R' has been chosen below)
-        stbi_uc medianValR = areaForMedian.getMedianChannelVal(imgCopy, 'R');
+        stbi_uc medianValR = areaForMedian.getMedianChannelVal(imgCopy, 0);
 
         rgb_errorFlag pixel_error = img.getPixel(p);
 

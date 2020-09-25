@@ -9,13 +9,15 @@
 #include "definitions.h"
 #include "png_toolkit.h"
 
-struct AreaRect {
+class AreaRect {
+private:
     point upLeft, downRight;
 
+public:
     AreaRect();
     AreaRect(const point &p, int radius);
 
-    bool containsPoint(const point& p);
+    bool containsPoint(const point& p) const;
 
     AreaRect partInsideOf(const AreaRect& B);
 
@@ -26,7 +28,7 @@ struct AreaRect {
     void forEachImagePixel(image_data& img,
                            const std::function<void(image_data&, const point&)> func);
 
-    stbi_uc getMedianChannelVal(image_data& img, char channel);
+    stbi_uc getMedianChannelVal(image_data& img, int channelIndex);
 };
 
 

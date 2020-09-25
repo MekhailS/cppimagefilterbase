@@ -4,10 +4,10 @@
 #include "area_rect.h"
 
 
-bool AreaRect::containsPoint(const point& p)
+bool AreaRect::containsPoint(const point& p) const
 {
     return (((upLeft.x >= p.x) && (p.x < downRight.x)) &&
-            ((upLeft.y >= p.y) && (downRight.y < p.y)))
+            ((upLeft.y >= p.y) && (downRight.y < p.y)));
 }
 
 AreaRect AreaRect::partInsideOf(const AreaRect& B)
@@ -48,36 +48,29 @@ AreaRect::AreaRect()
 
 void AreaRect::forEachImagePixel(image_data& img, const std::function<void(image_data&, const point&)> func)
 {
-    for (int x = upLeft.x; x < downRight.x; x++){
-        for (int y = upLeft.y; y < downRight.y; y++){
+    for (int x = upLeft.x; x < downRight.x; x++) {
+        for (int y = upLeft.y; y < downRight.y; y++) {
              func(img, {x, y});
         }
     }
 }
 
-stbi_uc AreaRect::getMedianChannelVal(image_data &img, char channel)
+stbi_uc AreaRect::getMedianChannelVal(image_data &img, int channelIndex)
 {
-    try {
-        int indexOfChannel = -1;
-
-        if (channel == 'R')
-            indexOfChannel = 0;
-        else if (channel == 'G')
-            indexOfChannel = 1;
-        else if (channel == 'B')
-            indexOfChannel = 2;
-        else
+    try
+    {
+        if ((channelIndex < 0) || (channelIndex > 2))
             throw "Not valid colour channel name";
 
         std::vector<stbi_uc> colorsInArea;
 
-        auto makeVectorColors_lambda = [&colorsInArea, indexOfChannel]
+        auto makeVectorColors_lambda = [&colorsInArea, channelIndex]
                 (image_data &img, const point &p) mutable
         {
             rgb_errorFlag pixel_error = img.getPixel(p);
 
             if (!pixel_error.second)
-                colorsInArea.push_back(pixel_error.first[indexOfChannel]);
+                colorsInArea.push_back(pixel_error.first[channelIndex]);
         };
 
         forEachImagePixel(img, makeVectorColors_lambda);
